@@ -3,7 +3,7 @@
 }
 
 .container {
-  width: 240px;
+  width: 260px;
   font-family: Arial;
   font-size: 20px;
 }
@@ -13,6 +13,14 @@
 .w-50{
   margin-right: -3px;
   width: 50%;
+}
+.w-75{
+  margin-right: -3px;
+  width: 75%;
+}
+.w-25{
+  margin-right: -3px;
+  width: 25%;
 }
 .btn {
   user-select: none;
@@ -25,9 +33,9 @@
   background-image: -ms-linear-gradient(top, #3498db, #2980b9);
   background-image: -o-linear-gradient(top, #3498db, #2980b9);
   background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
+  -webkit-border-radius: 6;
+  -moz-border-radius: 6;
+  border-radius: 6px;
 
   color: #ffffff;
   font-size: 20px;

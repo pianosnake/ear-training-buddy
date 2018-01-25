@@ -12,9 +12,8 @@
 <div class="container">
   <h1>JS.ET</h1>
 
-  <div class="btn w-100" onclick="playReference()">Reference A4</div>
-  <div class="btn w-100" onclick="playRandomChord()">Random Chord</div>
-  <div class="btn w-50" onclick="repeatLastChord()">Harmonic</div>
+  <div class="btn w-25" onclick="playReference()">A4</div>
+  <div class="btn w-75" id="randomBtn" onclick="playRandomChord()">Random Chord</div>
   <div class="btn w-50" onclick="repeatLastChord(true)">Melodic</div>
   <div class="btn w-100" onclick="reveal()">Reveal Last Chord</div>
 
@@ -22,27 +21,40 @@
 </div>
 <script>
   const answerDiv = document.getElementsByClassName('answer')[0];
+  const randomBtn = document.getElementById('randomBtn');
 
   const referenceNote = new Note(69);
 
   const bottomNote = 60; //C4
   const chordSpan = 12; //one octave of questions
   let currentChord;
+  let answered = true;
+
+  function msg(msg){
+    answerDiv.innerHTML = msg;
+  }
 
   function playReference(){
     referenceNote.play();
   }
 
   function playRandomChord(){
+    if(!answered) {
+      repeatLastChord();
+      return;
+    }
+    answered = false;
+
     referenceNote.stop();
     currentChord = new RandomChord(bottomNote, chordSpan);
     currentChord.play();
-    answerDiv.innerHTML = '';
+    msg('');
+    randomBtn.innerHTML = 'Repeat';
   }
 
   function repeatLastChord(melodic){
     if(!currentChord){
-      answerDiv.innerHTML = 'Play a chord first';
+      msg('Play a chord first');
       return;
     }
     currentChord.play(melodic);
@@ -50,10 +62,12 @@
 
   function reveal(){
     if(!currentChord){
-      answerDiv.innerHTML = 'Play a chord first';
+      msg('Play a chord first');
       return;
     }
+    answered = true;
     answerDiv.innerHTML = currentChord.name;
+    randomBtn.innerHTML = 'Random Chord';
   }
 </script>
 

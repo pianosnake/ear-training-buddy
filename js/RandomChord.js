@@ -12,7 +12,7 @@ class RandomChord {
     const third = new Note(root.value + 3 + major);  //generate a minor or major third randomly
     const fifth = new Note(root.value + 7);
 
-    this.notes = [root, third, fifth];
+    this.notes = [root, third, fifth].sort((n1, n2)=> n1.value > n2.value);  //sort in case of inversions
     this.name = root.name.slice(0, -1) + ' ' + (major ? 'Major' : 'minor'); //slice off the number from the note name
   }
 

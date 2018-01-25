@@ -6,6 +6,7 @@
   <link href="css/jset.css" rel="stylesheet" type="text/css" />
   <script src="js/Wave.js"></script>
   <script src="js/RandomChord.js"></script>
+  <script src="js/KeyboardShortcut.js"></script>
 </head>
 
 <body>
@@ -69,6 +70,10 @@
     answerDiv.innerHTML = currentChord.name;
     randomBtn.innerHTML = 'Random Chord';
   }
+
+  new KeyboardShortcut('r', playRandomChord);
+  new KeyboardShortcut('a', playReference);
+  new KeyboardShortcut(' ', reveal);
 </script>
 
 </body>

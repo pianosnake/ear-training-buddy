@@ -15,3 +15,5 @@ class KeyboardShortcut {
     }
   }
 }
+
+export default KeyboardShortcut;

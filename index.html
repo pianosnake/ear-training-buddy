@@ -3,78 +3,32 @@
 <head>
   <title>JS.ET</title>
   <meta charset="utf-8">
-  <link href="css/jset.css" rel="stylesheet" type="text/css" />
-  <script src="js/Wave.js"></script>
-  <script src="js/RandomChord.js"></script>
-  <script src="js/KeyboardShortcut.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="css/jset.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
 <div class="container">
   <h1>JS.ET</h1>
 
+  <div class="center pb-15">
+    <form>
+      <input type="radio" id="chordRadio" name="questionType" checked onclick="setQuestionType('chord')">
+      <label for="chordRadio">Chord</label>
+
+      <input type="radio" id="intervalRadio" name="questionType" onclick="setQuestionType('interval')">
+      <label for="intervalRadio">Interval</label></form>
+  </div>
   <div class="btn w-25" onclick="playReference()">A4</div>
-  <div class="btn w-75" id="randomBtn" onclick="playRandomChord()">Random Chord</div>
-  <div class="btn w-50" onclick="repeatLastChord(true)">Melodic</div>
-  <div class="btn w-100" onclick="reveal()">Reveal Last Chord</div>
+  <div class="btn w-75" id="playBtn" onclick="playQuestion()">Play New</div>
+  <div class="btn w-25" onclick="hint()">Hint</div>
+  <div class="btn w-75" onclick="reveal()">Answer</div>
 
-  <div class="answer"></div>
+  <div id="answer" class="center"></div>
 </div>
-<script>
-  const answerDiv = document.getElementsByClassName('answer')[0];
-  const randomBtn = document.getElementById('randomBtn');
 
-  const referenceNote = new Note(69);
-
-  const bottomNote = 60; //C4
-  const chordSpan = 12; //one octave of questions
-  let currentChord;
-  let answered = true;
-
-  function msg(msg){
-    answerDiv.innerHTML = msg;
-  }
-
-  function playReference(){
-    referenceNote.play();
-  }
-
-  function playRandomChord(){
-    if(!answered) {
-      repeatLastChord();
-      return;
-    }
-    answered = false;
-
-    referenceNote.stop();
-    currentChord = new RandomChord(bottomNote, chordSpan);
-    currentChord.play();
-    msg('');
-    randomBtn.innerHTML = 'Repeat';
-  }
-
-  function repeatLastChord(melodic){
-    if(!currentChord){
-      msg('Play a chord first');
-      return;
-    }
-    currentChord.play(melodic);
-  }
-
-  function reveal(){
-    if(!currentChord){
-      msg('Play a chord first');
-      return;
-    }
-    answered = true;
-    answerDiv.innerHTML = currentChord.name;
-    randomBtn.innerHTML = 'Random Chord';
-  }
-
-  new KeyboardShortcut('r', playRandomChord);
-  new KeyboardShortcut('a', playReference);
-  new KeyboardShortcut(' ', reveal);
-</script>
-
+<!--<script src="dist/bundle.js"></script>-->
+<script type="module" src="src/index.js"></script>
 </body>
 </html>

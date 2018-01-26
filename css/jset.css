@@ -1,9 +1,8 @@
 * {
   box-sizing: border-box;
 }
-
 .container {
-  width: 260px;
+  width: 350px;
   font-family: Arial;
   font-size: 20px;
 }
@@ -22,6 +21,9 @@
   margin-right: -3px;
   width: 25%;
 }
+.pb-15{
+  padding-bottom: 15px;
+}
 .btn {
   user-select: none;
   display: inline-block;
@@ -39,7 +41,7 @@
 
   color: #ffffff;
   font-size: 20px;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 0;
   text-decoration: none;
   cursor: pointer;
 }
@@ -54,7 +56,7 @@
   text-decoration: none;
 }
 
-.answer {
+.center {
   display: block;
   text-align: center;
 }

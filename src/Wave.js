@@ -3,7 +3,7 @@ class Wave {
     this.file = file;
 
     if(!window.audioContext) {
-      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safar needs the webkitAudioContext part
+      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari needs the webkitAudioContext part
     }
     this.audioContext = window.audioContext;
     this.gainNode = this.audioContext.createGain();
@@ -36,3 +36,5 @@ class Wave {
     this.source = null;
   }
 }
+
+export default Wave;

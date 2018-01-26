@@ -139,11 +139,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 const answerDiv = document.getElementById('answer');
 const playBtn = document.getElementById('playBtn');
+const hintBtn = document.getElementById('hintBtn');
+const answerBtn = document.getElementById('answerBtn');
+const referenceBtn = document.getElementById('referenceBtn');
+const chordRadio = document.getElementById('chordRadio');
+const intervalRadio = document.getElementById('intervalRadio');
+
+playBtn.addEventListener('click', playQuestion);
+hintBtn.addEventListener('click', hint);
+referenceBtn.addEventListener('click', playReference);
+answerBtn.addEventListener('click', answer);
+chordRadio.addEventListener('click', ()=>setQuestionType('chord'));
+intervalRadio.addEventListener('click', ()=>setQuestionType('interval'));
 
 const referenceNote = new __WEBPACK_IMPORTED_MODULE_0__Note_js__["a" /* default */](69);
-
 const bottomNote = 60; //C4
 const chordSpan = 12; //one octave of questions
+
 let currentQuestion;
 let answered = true;
 let questionType = 'chord';
@@ -187,7 +199,7 @@ function hint(){
   repeatLastQuestion(true);
 }
 
-function reveal(){
+function answer(){
   if(!currentQuestion){
     msg('Play first');
     return;
@@ -204,7 +216,7 @@ function setQuestionType(type){
 new __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__["a" /* default */]('r', playQuestion);
 new __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__["a" /* default */]('a', playReference);
 new __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__["a" /* default */]('h', hint);
-new __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__["a" /* default */](' ', reveal);
+new __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__["a" /* default */](' ', answer);
 
 /***/ }),
 /* 3 */
@@ -265,6 +277,7 @@ class Wave {
 class RandomChord extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */] {
   constructor(bottomNote, chordSpan){
     super();
+
     const root = new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](bottomNote + Math.floor(Math.random() * chordSpan));
     const major = Math.round(Math.random()); // a 1 or 0 for major
     const third = new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](root.value + 3 + major);  //generate a minor or major third randomly
@@ -290,8 +303,9 @@ class RandomChord extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* defa
 const intervalNames = ['Unison', 'Minor second', 'Major second', 'Minor third', 'Major third', 'Fourth', 'Tritone', 'Fifth', 'Minor sixth', 'Major sixth', 'Minor seventh', 'Major seventh', 'Octave'];
 
 class RandomInterval extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */] {
-  constructor(bottomNode, range){
+  constructor(bottomNote, range){
     super();
+
     const first = new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](bottomNote + Math.floor(Math.random() * range));
     const second = new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](first.value + 1 + Math.floor(Math.random() * 11)); //don't play unisons
 

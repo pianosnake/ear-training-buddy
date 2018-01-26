@@ -4,6 +4,7 @@ import Note from './Note.js';
 class RandomChord extends Playable {
   constructor(bottomNote, chordSpan){
     super();
+
     const root = new Note(bottomNote + Math.floor(Math.random() * chordSpan));
     const major = Math.round(Math.random()); // a 1 or 0 for major
     const third = new Note(root.value + 3 + major);  //generate a minor or major third randomly

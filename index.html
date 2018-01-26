@@ -14,16 +14,16 @@
 
   <div class="center pb-15">
     <form>
-      <input type="radio" id="chordRadio" name="questionType" checked onclick="setQuestionType('chord')">
+      <input type="radio" id="chordRadio" name="questionType" checked>
       <label for="chordRadio">Chord</label>
 
-      <input type="radio" id="intervalRadio" name="questionType" onclick="setQuestionType('interval')">
+      <input type="radio" id="intervalRadio" name="questionType">
       <label for="intervalRadio">Interval</label></form>
   </div>
-  <div class="btn w-25" onclick="playReference()">A4</div>
-  <div class="btn w-75" id="playBtn" onclick="playQuestion()">Play New</div>
-  <div class="btn w-25" onclick="hint()">Hint</div>
-  <div class="btn w-75" onclick="reveal()">Answer</div>
+  <div class="btn w-25" id="referenceBtn">A4</div>
+  <div class="btn w-75" id="playBtn">Play New</div>
+  <div class="btn w-25" id="hintBtn">Hint</div>
+  <div class="btn w-75" id="answerBtn">Answer</div>
 
   <div id="answer" class="center"></div>
 </div>

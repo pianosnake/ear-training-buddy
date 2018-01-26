@@ -5,11 +5,23 @@ import KeyboardShortcut from './KeyboardShortcut.js';
 
 const answerDiv = document.getElementById('answer');
 const playBtn = document.getElementById('playBtn');
+const hintBtn = document.getElementById('hintBtn');
+const answerBtn = document.getElementById('answerBtn');
+const referenceBtn = document.getElementById('referenceBtn');
+const chordRadio = document.getElementById('chordRadio');
+const intervalRadio = document.getElementById('intervalRadio');
+
+playBtn.addEventListener('click', playQuestion);
+hintBtn.addEventListener('click', hint);
+referenceBtn.addEventListener('click', playReference);
+answerBtn.addEventListener('click', answer);
+chordRadio.addEventListener('click', ()=>setQuestionType('chord'));
+intervalRadio.addEventListener('click', ()=>setQuestionType('interval'));
 
 const referenceNote = new Note(69);
-
 const bottomNote = 60; //C4
 const chordSpan = 12; //one octave of questions
+
 let currentQuestion;
 let answered = true;
 let questionType = 'chord';
@@ -53,7 +65,7 @@ function hint(){
   repeatLastQuestion(true);
 }
 
-function reveal(){
+function answer(){
   if(!currentQuestion){
     msg('Play first');
     return;
@@ -61,6 +73,7 @@ function reveal(){
   answered = true;
   answerDiv.innerHTML = currentQuestion.name;
   playBtn.innerHTML = 'Play New';
+  repeatLastQuestion();
 }
 
 function setQuestionType(type){
@@ -70,4 +83,4 @@ function setQuestionType(type){
 new KeyboardShortcut('r', playQuestion);
 new KeyboardShortcut('a', playReference);
 new KeyboardShortcut('h', hint);
-new KeyboardShortcut(' ', reveal);
+new KeyboardShortcut(' ', answer);

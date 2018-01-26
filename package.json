@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "inline-source-cli": "^1.2.0",
     "jasmine-node": "^2.0.0",
     "rewire": "^3.0.2",
     "webpack": "^3.10.0"
-  }
+  },
+  "dependencies": {}
 }

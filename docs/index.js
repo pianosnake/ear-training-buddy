@@ -207,6 +207,7 @@ function answer(){
   answered = true;
   answerDiv.innerHTML = currentQuestion.name;
   playBtn.innerHTML = 'Play New';
+  repeatLastQuestion();
 }
 
 function setQuestionType(type){

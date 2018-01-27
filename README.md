@@ -1,7 +1,7 @@
 # Simple Ear Training
 
 This is a simple mobile-friendly ear training web app. It can play a reference value
- of A440 and generate random chords and intervals.
+ of A440 and generate random chords and intervals. [Available live here](https://pianosnake.github.io/simple-ear-training/index.html).
 
  The following keyboard shortcuts are provided to speed  up the exercise:
  
@@ -10,7 +10,7 @@ This is a simple mobile-friendly ear training web app. It can play a reference v
 - __H__ Play the hint (interval or chord played melodically)
 - __SPACE__ Show the answer
 
-The sounds are real piano samples from the [http://theremin.music.uiowa.edu/MIS.html](University of Iowa Musical Instrument Samples) available in the Public Domain.
+The sounds are real piano samples from the [University of Iowa Musical Instrument Samples](http://theremin.music.uiowa.edu/MIS.html) available in the Public Domain.
 
 ### Developing
 The `/docs` folder is used for hosting the app on GitHub. The real index.html and CSS are here.

@@ -5,6 +5,14 @@ body{
   background-color: #356aa0;
   color: white;
 }
+.source a:link, .source a:visited {
+  color: white;
+  font-size: 12px;
+  text-decoration: none;
+}
+.source a:hover{
+  text-decoration: underline;
+}
 .container {
   width: 350px;
   font-family: Arial;
@@ -64,4 +72,8 @@ input[type='radio']{
 label{
   display: inline;
   vertical-align: middle;
+}
+#answer{
+  height: 30px;
+  display: block;
 }

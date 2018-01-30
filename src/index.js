@@ -67,7 +67,7 @@ function hint(){
 
 function answer(){
   if(!currentQuestion){
-    msg('Play first');
+    msg('Play something first');
     return;
   }
   answered = true;

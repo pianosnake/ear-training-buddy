@@ -275,17 +275,30 @@ class Wave {
 
 
 
+const chordTypes = [
+  //definition is an array of semitones from root
+  {type: 'major', def: [0, 4, 7]},
+  {type: 'minor', def: [0, 3, 7]},
+  {type: 'diminished', def: [0, 3, 6]},
+  {type: 'augmented', def: [0, 4, 8]},
+  {type: 'dominant', def: [0, 4, 7, 10]},
+  {type: 'major 7th', def: [0, 4, 7, 11]},
+  {type: 'minor 7th', def: [0, 3, 7, 10]},
+  {type: 'half-diminisehd 7th', def: [0, 3, 6, 10]}
+]
+
 class RandomChord extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */] {
   constructor(bottomNote, chordSpan){
     super();
 
-    const root = new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](bottomNote + Math.floor(Math.random() * chordSpan));
-    const major = Math.round(Math.random()); // a 1 or 0 for major
-    const third = new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](root.value + 3 + major);  //generate a minor or major third randomly
-    const fifth = new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](root.value + 7);
+    const chord = chordTypes[Math.floor(Math.random() * chordTypes.length)];
+    const root = bottomNote + Math.floor(Math.random() * chordSpan);
 
-    this.notes = [root, third, fifth].sort((n1, n2)=> n1.value > n2.value);  //sort in case of inversions
-    this.name = root.name.slice(0, -1) + ' ' + (major ? 'Major' : 'minor'); //slice off the number from the note name
+    this.notes = chord.def.map(distanceFromRoot => {
+      return new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](root + distanceFromRoot)
+    })
+
+    this.name = this.notes[0].name.slice(0, -1) + ' ' + chord.type; //slice off the number from the note name
   }
 }
 

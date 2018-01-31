@@ -1,1 +1,36 @@
-../docs/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SET</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="css/jset.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div class="container">
+  <h1>SET</h1>
+
+  <div class="center pb-15">
+    <form>
+      <input type="radio" id="chordRadio" name="questionType" checked>
+      <label for="chordRadio">Chord</label>
+
+      <input type="radio" id="intervalRadio" name="questionType">
+      <label for="intervalRadio">Interval</label></form>
+  </div>
+  <div class="btn w-25" id="referenceBtn">A4</div>
+  <div class="btn w-75" id="playBtn">Play New</div>
+  <div class="btn w-25" id="hintBtn">Hint</div>
+  <div class="btn w-75" id="answerBtn">Answer</div>
+
+  <div id="answer" class="center"></div>
+
+  <div class="source"><a href="https://github.com/pianosnake/simple-ear-training">https://github.com/pianosnake/simple-ear-training</a></div>
+</div>
+
+<script type="module" src="index.js"></script>
+
+</body>
+</html>

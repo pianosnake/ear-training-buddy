@@ -91,6 +91,9 @@ class Note extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */]
   }
 
   getAudio(audioContext){
+    // keep the decoded audio data in note.buffer so that we don't load the file
+    // and decode it every time we want to play the note
+
     return new Promise((resolve, reject) =>{
       if(this.buffer){
         resolve(this.buffer);
@@ -102,7 +105,7 @@ class Note extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */]
       request.responseType = 'arraybuffer';
 
       request.onload = () => {
-        audioContext.decodeAudioData(request.response, decodedData => {
+        audioContext.decodeAudioData(request.response, decodedData => {  //Safari 11.0.3 needs this as a callback, not a Promise
           this.buffer = decodedData;
           resolve(this.buffer);
         });
@@ -123,10 +126,18 @@ class Note extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */]
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// Notes, Chords and Intervals get play() and stop() methods by extending Playable.
+
+// Audio API components:
+// note buffer source -> gain node -> compressor -> destination
+
+// gain node is used to fade out the notes
+// compressor is used to fix clipping from multiple notes playing at the same time
+
 class Playable {
   constructor(){
     if(!window.audioContext) {
-      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari needs the webkitAudioContext part
+      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari 11.0.3 needs the webkitAudioContext part
     }
     this.audioContext = window.audioContext;
     this.compressor = this.audioContext.createDynamicsCompressor();
@@ -141,9 +152,8 @@ class Playable {
   play(melodic){
     this.gainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
 
-    Promise.all(this.notes.map(note =>{
-      return note.getAudio(this.audioContext)
-    }))
+    //load the audio for all the notes so they can all play at the same time
+    Promise.all(this.notes.map(note => note.getAudio(this.audioContext)))
       .then(() =>{
         this.notes.forEach((note, index) =>{
           const source = audioContext.createBufferSource();
@@ -158,7 +168,7 @@ class Playable {
   }
 
   stop(){
-      this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+    this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
   }
 }
 
@@ -280,7 +290,7 @@ const chordTypes = [
   {type: 'dominant', def: [0, 4, 7, 10]},
   {type: 'major 7th', def: [0, 4, 7, 11]},
   {type: 'minor 7th', def: [0, 3, 7, 10]},
-  {type: 'half-diminisehd 7th', def: [0, 3, 6, 10]}
+  {type: 'half-diminished 7th', def: [0, 3, 6, 10]}
 ]
 
 class RandomChord extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */] {
@@ -290,9 +300,7 @@ class RandomChord extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* defa
     const chord = chordTypes[Math.floor(Math.random() * chordTypes.length)];
     const root = bottomNote + Math.floor(Math.random() * chordSpan);
 
-    this.notes = chord.def.map(distanceFromRoot => {
-      return new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](root + distanceFromRoot)
-    })
+    this.notes = chord.def.map(distanceFromRoot => new __WEBPACK_IMPORTED_MODULE_1__Note_js__["a" /* default */](root + distanceFromRoot));
 
     this.name = this.notes[0].name.slice(0, -1) + ' ' + chord.type; //slice off the number from the note name
   }
@@ -334,6 +342,9 @@ class RandomInterval extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* d
 "use strict";
 class KeyboardShortcut {
   constructor(listenFor, callback){
+
+    // every time this is instantiated it takes the existing
+    // window onkeyup event and wraps it in a new method
 
     const existingListener = window.onkeyup;
 

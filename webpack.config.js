@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlStringReplace = require('html-string-replace-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -9,6 +10,7 @@ module.exports = {
     path: path.resolve(__dirname, 'docs')
   },
   plugins: [
+    new UglifyJsPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       filename: 'index.html',

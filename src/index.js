@@ -25,6 +25,7 @@ const chordSpan = 12; //one octave of questions
 let currentQuestion;
 let answered = true;
 let questionType = 'chord';
+let hintSpeed = 0;
 
 function msg(msg){
   answerDiv.innerHTML = msg;
@@ -42,6 +43,8 @@ function playQuestion(){
   answered = false;
 
   referenceNote.stop();
+  hintSpeed = 0;
+
   if(questionType === 'chord'){
     currentQuestion = new RandomChord(bottomNote, chordSpan);
   }else{
@@ -53,16 +56,20 @@ function playQuestion(){
   playBtn.innerHTML = 'Repeat';
 }
 
-function repeatLastQuestion(melodic){
+function repeatLastQuestion(noteDistance){
   if(!currentQuestion){
     msg('Play a chord first');
     return;
   }
-  currentQuestion.play(melodic);
+  currentQuestion.play(noteDistance);
 }
 
 function hint(){
-  repeatLastQuestion(true);
+  hintSpeed ++;
+  //slow down the playing each time the hint button is pressed
+  repeatLastQuestion(hintSpeed * 0.15);
+  //reset to original speed
+  if(hintSpeed > 2) hintSpeed = 0;
 }
 
 function answer(){

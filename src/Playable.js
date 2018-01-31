@@ -1,7 +1,15 @@
+// Notes, Chords and Intervals get play() and stop() methods by extending Playable.
+
+// Audio API components:
+// note buffer source -> gain node -> compressor -> destination
+
+// gain node is used to fade out the notes
+// compressor is used to fix clipping from multiple notes playing at the same time
+
 class Playable {
   constructor(){
     if(!window.audioContext) {
-      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari needs the webkitAudioContext part
+      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari 11.0.3 needs the webkitAudioContext part
     }
     this.audioContext = window.audioContext;
     this.compressor = this.audioContext.createDynamicsCompressor();
@@ -16,9 +24,8 @@ class Playable {
   play(melodic){
     this.gainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
 
-    Promise.all(this.notes.map(note =>{
-      return note.getAudio(this.audioContext)
-    }))
+    //load the audio for all the notes so they can all play at the same time
+    Promise.all(this.notes.map(note => note.getAudio(this.audioContext)))
       .then(() =>{
         this.notes.forEach((note, index) =>{
           const source = audioContext.createBufferSource();
@@ -33,7 +40,7 @@ class Playable {
   }
 
   stop(){
-      this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+    this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
   }
 }
 

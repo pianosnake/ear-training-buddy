@@ -1,6 +1,6 @@
 # Simple Ear Training
 
-This is a simple mobile-friendly ear training web app. It can play a reference value
+This is a relative pitch ear training web app. It can play a reference value
  of A440 and generate random chords and intervals. [Available live here](https://pianosnake.github.io/simple-ear-training/index.html).
 
 In __Chord__ mode the app can be used to identify chord types. For more of a challenge, play the reference note and try to identify

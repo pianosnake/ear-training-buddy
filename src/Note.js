@@ -20,6 +20,9 @@ class Note extends Playable {
   }
 
   getAudio(audioContext){
+    // keep the decoded audio data in note.buffer so that we don't load the file
+    // and decode it every time we want to play the note
+
     return new Promise((resolve, reject) =>{
       if(this.buffer){
         resolve(this.buffer);
@@ -31,7 +34,7 @@ class Note extends Playable {
       request.responseType = 'arraybuffer';
 
       request.onload = () => {
-        audioContext.decodeAudioData(request.response, decodedData => {
+        audioContext.decodeAudioData(request.response, decodedData => {  //Safari 11.0.3 needs this as a callback, not a Promise
           this.buffer = decodedData;
           resolve(this.buffer);
         });

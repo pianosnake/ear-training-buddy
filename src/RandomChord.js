@@ -10,7 +10,7 @@ const chordTypes = [
   {type: 'dominant', def: [0, 4, 7, 10]},
   {type: 'major 7th', def: [0, 4, 7, 11]},
   {type: 'minor 7th', def: [0, 3, 7, 10]},
-  {type: 'half-diminisehd 7th', def: [0, 3, 6, 10]}
+  {type: 'half-diminished 7th', def: [0, 3, 6, 10]}
 ]
 
 class RandomChord extends Playable {
@@ -20,9 +20,7 @@ class RandomChord extends Playable {
     const chord = chordTypes[Math.floor(Math.random() * chordTypes.length)];
     const root = bottomNote + Math.floor(Math.random() * chordSpan);
 
-    this.notes = chord.def.map(distanceFromRoot => {
-      return new Note(root + distanceFromRoot)
-    })
+    this.notes = chord.def.map(distanceFromRoot => new Note(root + distanceFromRoot));
 
     this.name = this.notes[0].name.slice(0, -1) + ' ' + chord.type; //slice off the number from the note name
   }

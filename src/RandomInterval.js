@@ -12,7 +12,7 @@ class RandomInterval extends Playable {
 
     this.notes = [first, second];
     this.name = `${intervalNames[second.value - first.value]} (${first.name}-${second.name})`;
-    this.melodicPlaybackNoteDistance = 800;
+    this.melodicDelay = 0.3;
   }
 }
 

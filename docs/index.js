@@ -68,10 +68,10 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Wave_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Playable_js__ = __webpack_require__(1);
 
 
-const noteNames = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+const noteNames = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 
 function noteNameFromMIDINumber(num){
   const octave = Math.floor(num / 12) - 1;
@@ -79,20 +79,40 @@ function noteNameFromMIDINumber(num){
   return noteNames[idx] + octave;
 }
 
-class Note{
+class Note extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* default */] {
   constructor(MIDINumber){
+    super();
+
     this.value = MIDINumber;
     this.name = noteNameFromMIDINumber(MIDINumber);
-    this.file = 'sounds/' + this.name + '-97-127.mp3';
-    this.sound;
+    this.file = './sounds/' + this.name + '-97-127.mp3';
+    this.notes = [this];
+    this.buffer;
   }
 
-  play(){
-    this.sound = new __WEBPACK_IMPORTED_MODULE_0__Wave_js__["a" /* default */](this.file);
-    this.sound.start();
-  }
-  stop(){
-    if(this.sound) this.sound.stop();
+  getAudio(audioContext){
+    return new Promise((resolve, reject) =>{
+      if(this.buffer){
+        resolve(this.buffer);
+        return;
+      }
+
+      const request = new XMLHttpRequest();
+      request.open('GET', this.file, true);
+      request.responseType = 'arraybuffer';
+
+      request.onload = () => {
+        audioContext.decodeAudioData(request.response, decodedData => {
+          this.buffer = decodedData;
+          resolve(this.buffer);
+        });
+      }
+
+      request.onerror = err => reject(err);
+
+      request.send();
+    })
+
   }
 }
 
@@ -104,19 +124,41 @@ class Note{
 
 "use strict";
 class Playable {
-    constructor(){
-      this.melodicPlaybackNoteDistance = 200;
+  constructor(){
+    if(!window.audioContext) {
+      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari needs the webkitAudioContext part
     }
-   play(melodic){
-    if(melodic){
-      this.notes.forEach((note, index) =>
-          setTimeout(() =>{
-            note.play();
-          }, index * this.melodicPlaybackNoteDistance)
-      );
-    }else{
-      this.notes.forEach(note=>note.play());
-    }
+    this.audioContext = window.audioContext;
+    this.compressor = this.audioContext.createDynamicsCompressor();
+
+    this.gainNode = this.audioContext.createGain();
+    this.gainNode.connect(this.compressor);
+    this.compressor.connect(this.audioContext.destination);
+
+    this.melodicDelay = 0.2;
+  }
+
+  play(melodic){
+    this.gainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
+
+    Promise.all(this.notes.map(note =>{
+      return note.getAudio(this.audioContext)
+    }))
+      .then(() =>{
+        this.notes.forEach((note, index) =>{
+          const source = audioContext.createBufferSource();
+          const offset = melodic ? index * this.melodicDelay : 0;
+
+          source.buffer = note.buffer;
+          source.connect(this.gainNode);
+          source.start(this.audioContext.currentTime + offset, 0, 3); //end around the same time as the fadeout
+        })
+        this.gainNode.gain.setTargetAtTime(0, this.audioContext.currentTime + 1, 0.5); //fade out
+      })
+  }
+
+  stop(){
+      this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
   }
 }
 
@@ -129,9 +171,9 @@ class Playable {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RandomChord_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__RandomInterval_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RandomChord_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__RandomInterval_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__ = __webpack_require__(5);
 
 
 
@@ -224,52 +266,6 @@ new __WEBPACK_IMPORTED_MODULE_3__KeyboardShortcut_js__["a" /* default */](' ', a
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Wave {
-  constructor(file){
-    this.file = file;
-
-    if(!window.audioContext) {
-      window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari needs the webkitAudioContext part
-    }
-    this.audioContext = window.audioContext;
-    this.gainNode = this.audioContext.createGain();
-  }
-
-  start(){
-    this.source = this.audioContext.createBufferSource();
-    const request = new XMLHttpRequest();
-    request.open('GET', this.file, true);
-    request.responseType = 'arraybuffer';
-
-    request.onload = () => {
-      this.audioContext.decodeAudioData(request.response, decodedData =>{ //use a callback bc Safari 11.0.2 doesn't support promises here
-        this.source.buffer = decodedData;
-
-        this.source.connect(this.gainNode);
-        this.gainNode.connect(this.audioContext.destination);
-        this.gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 3); //fade out
-
-        this.source.start(0, 0, 3); //same as fadeout
-      });
-    };
-
-    request.send();
-  }
-  stop(){
-    if(!this.source) return;
-    this.source.stop();
-    this.source.disconnect();
-    this.source = null;
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Wave);
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Playable_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Note_js__ = __webpack_require__(0);
 
@@ -305,7 +301,7 @@ class RandomChord extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* defa
 /* harmony default export */ __webpack_exports__["a"] = (RandomChord);
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -325,14 +321,14 @@ class RandomInterval extends __WEBPACK_IMPORTED_MODULE_0__Playable_js__["a" /* d
 
     this.notes = [first, second];
     this.name = `${intervalNames[second.value - first.value]} (${first.name}-${second.name})`;
-    this.melodicPlaybackNoteDistance = 800;
+    this.melodicDelay = 0.3;
   }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (RandomInterval);
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -65,15 +65,32 @@ body{
   display: block;
   text-align: center;
 }
-input[type='radio']{
-  display: inline;
-  vertical-align: middle;
-}
-label{
-  display: inline;
-  vertical-align: middle;
-}
 #answer{
   height: 30px;
   display: block;
+}
+
+/* Restyle the default radio buttons */
+input[type='radio']{
+  position: absolute;
+  opacity: 0;
+}
+label{
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  border: 1px solid;
+  cursor: pointer;
+  -webkit-border-radius: 25;
+  -moz-border-radius: 25;
+  border-radius: 25px;
+
+}
+input:checked + label {
+  background-image: -webkit-linear-gradient(top, #94c3e2, #2980b9);
+  background-image: -moz-linear-gradient(top, #94c3e2, #2980b9);
+  background-image: -ms-linear-gradient(top, #94c3e2, #2980b9);
+  background-image: -o-linear-gradient(top, #94c3e2, #2980b9);
+  background-image: linear-gradient(to bottom, #94c3e2, #2980b9);
 }

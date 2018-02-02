@@ -1,15 +1,14 @@
 import Note from './Note.js';
 import RandomChord from './RandomChord.js';
-import RandomInterval from './RandomInterval.js';
 import KeyboardShortcut from './KeyboardShortcut.js';
 
 const referenceNote = new Note(69);
-const bottomNote = 60; //C4
-const chordSpan = 12; //one octave of questions
+const bottomNote = 57; //C4=60
+const questionSpan = 15; //one octave=12
 
 let currentQuestion;
 let answered = true;
-let questionType = 'chord';
+let questionType = 1;
 let hintSpeed = 0;
 
 export default class UI {
@@ -18,8 +17,10 @@ export default class UI {
     els.hintBtn.addEventListener('click', ()=>this.hint());
     els.referenceBtn.addEventListener('click', ()=>this.playReference());
     els.answerBtn.addEventListener('click', ()=>this.showAnswer());
-    els.chordRadio.addEventListener('click', ()=>this.setQuestionType('chord'));
-    els.intervalRadio.addEventListener('click', ()=>this.setQuestionType('interval'));
+    els.note1Radio.addEventListener('click', ()=>this.setQuestionType(1));
+    els.note2Radio.addEventListener('click', ()=>this.setQuestionType(2));
+    els.note3Radio.addEventListener('click', ()=>this.setQuestionType(3));
+    els.note4Radio.addEventListener('click', ()=>this.setQuestionType(4));
 
     this.playBtn = els.playBtn;
     this.answerDiv = els.answerDiv;
@@ -48,10 +49,10 @@ export default class UI {
     referenceNote.stop();
     hintSpeed = 0;
 
-    if(questionType === 'chord'){
-      currentQuestion = new RandomChord(bottomNote, chordSpan);
+    if(questionType === 1){
+      currentQuestion = new Note(bottomNote + Math.floor(Math.random() * questionSpan));
     }else{
-      currentQuestion = new RandomInterval(bottomNote, chordSpan);
+      currentQuestion = new RandomChord(bottomNote, questionSpan, questionType);
     }
 
     currentQuestion.play();
@@ -61,7 +62,7 @@ export default class UI {
 
   repeatLastQuestion(noteDistance){
     if(!currentQuestion){
-      this.showMsg('Play a chord first');
+      this.showMsg('Play something first');
       return;
     }
     currentQuestion.play(noteDistance);

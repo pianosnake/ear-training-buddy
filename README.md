@@ -3,16 +3,16 @@
 This is a relative pitch ear training web app. It can play a reference value
  of A440 and generate random chords and intervals. [Available live here](https://pianosnake.github.io/simple-ear-training/index.html).
 
-In __Chord__ mode the app can be used to identify chord types. For more of a challenge, play the reference note and try to identify
-the root of the chord.
-
-In __Interval__ mode the app can be used to identify intervals. For more of a challenge, play the reference note and try to identify
-the notes making up the interval. Press the answer button to see if you were correct.
+Choose how many notes you'd like to hear by clicking __1__, __2__, __3__ or __4__.
+ With __1__ note you can test your relative pitch.
+ With __2__ notes you can test your interval recognition; for more of a challenge play the reference note and try to identify the interval pitches.
+ With __3__ notes you can try recognizing major, minor, diminished or augmented triads.
+ With __4__ notes  you can try recognizing chords like major 7, minor 7th, dominant and half-diminished.
 
 The following keyboard shortcuts are provided to speed up the exercise:
 
 - __A__ Play reference note
-- __R__ Play a random interval or chord
+- __R__ Play a random note, interval or chord
 - __H__ Play the hint (interval or chord played melodically)
 - __SPACE__ Show the answer
 

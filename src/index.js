@@ -6,6 +6,8 @@ new UI({
   hintBtn: document.getElementById('hintBtn'),
   answerBtn: document.getElementById('answerBtn'),
   referenceBtn: document.getElementById('referenceBtn'),
-  chordRadio: document.getElementById('chordRadio'),
-  intervalRadio: document.getElementById('intervalRadio')
+  note1Radio: document.getElementById('note1'),
+  note2Radio: document.getElementById('note2'),
+  note3Radio: document.getElementById('note3'),
+  note4Radio: document.getElementById('note4')
 })

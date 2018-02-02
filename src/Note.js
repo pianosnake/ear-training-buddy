@@ -13,10 +13,18 @@ export default class Note extends Playable {
     super();
 
     this.value = MIDINumber;
-    this.name = noteNameFromMIDINumber(MIDINumber);
-    this.file = './sounds/' + this.name + '-97-127.mp3';
+    this._name = noteNameFromMIDINumber(MIDINumber);
+    this.file = './sounds/' + this._name + '-97-127.mp3';
     this.notes = [this];
     this.buffer;
+  }
+
+  get name(){
+    if(this._name[1] === 'b'){
+      return this._name.replace('b', '♭');
+    }else{
+      return this._name;
+    }
   }
 
   getAudio(audioContext){

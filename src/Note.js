@@ -8,7 +8,7 @@ function noteNameFromMIDINumber(num){
   return noteNames[idx] + octave;
 }
 
-class Note extends Playable {
+export default class Note extends Playable {
   constructor(MIDINumber){
     super();
 
@@ -47,5 +47,3 @@ class Note extends Playable {
 
   }
 }
-
-export default Note;

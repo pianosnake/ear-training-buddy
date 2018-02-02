@@ -4,7 +4,7 @@ import Note from './Note.js';
 //index in array corresponds to semi-tones from root
 const intervalNames = ['Unison', 'Minor second', 'Major second', 'Minor third', 'Major third', 'Fourth', 'Tritone', 'Fifth', 'Minor sixth', 'Major sixth', 'Minor seventh', 'Major seventh', 'Octave'];
 
-class RandomInterval extends Playable {
+export default class RandomInterval extends Playable {
   constructor(bottomNote, range){
     super();
 
@@ -15,5 +15,3 @@ class RandomInterval extends Playable {
     this.name = `${intervalNames[second.value - first.value]} (${first.name}-${second.name})`;
   }
 }
-
-export default RandomInterval;

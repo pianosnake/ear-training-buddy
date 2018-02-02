@@ -13,7 +13,7 @@ const chordTypes = [
   {type: 'half-diminished 7th', def: [0, 3, 6, 10]}
 ]
 
-class RandomChord extends Playable {
+export default class RandomChord extends Playable {
   constructor(bottomNote, chordSpan){
     super();
 
@@ -25,5 +25,3 @@ class RandomChord extends Playable {
     this.name = this.notes[0].name.slice(0, -1) + ' ' + chord.type; //slice off the number from the note name
   }
 }
-
-export default RandomChord;

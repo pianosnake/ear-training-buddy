@@ -7,7 +7,7 @@
 // Master gain node is used to stop the sound
 // Compressor is used to fix clipping from multiple notes playing at the same time
 
-class Playable {
+export default class Playable {
   constructor(){
     if(!window.audioContext) {
       window.audioContext = new (window.AudioContext || window.webkitAudioContext)();  //Safari 11.0.3 needs the webkitAudioContext part
@@ -44,5 +44,3 @@ class Playable {
     this.masterGainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
   }
 }
-
-export default Playable;

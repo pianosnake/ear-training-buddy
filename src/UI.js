@@ -81,15 +81,15 @@ export default class UI {
       this.showMsg('Play something first');
       return;
     }
-    if(answered){
-      this.repeatLastQuestion();
-    }
+    this.repeatLastQuestion();
     answered = true;
     this.showMsg(currentQuestion.name);
     this.playBtn.innerHTML = 'Play New';
   }
 
   setQuestionType(type){
+    this.playBtn.innerHTML = 'Play New';
+    answered = true;
     questionType = type;
   }
 }

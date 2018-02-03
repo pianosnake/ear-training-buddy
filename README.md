@@ -27,9 +27,3 @@ The JS code is written using ES6 modules which Chrome will load correctly based 
 
 To build the project do `npm install` to get webpack. Then then do `npm run build` which will create the `docs/index.js` bundle and will
 copy index.html to `docs/` modifying the script tag.
-
--eslint
--radio buttons styled with notes
--superscripts for numbers in note names
--play root note louder
--dont repeat same question twice in a row

@@ -99,6 +99,6 @@ input:checked + label svg {
 }
 #hintBtn svg{
   position: relative;
-  top: 5px;
-  margin-top: -5px;
+  top: 14px;
+  margin-top: -20px;
 }

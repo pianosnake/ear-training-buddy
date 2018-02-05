@@ -22,9 +22,9 @@ const chordTypes = [
   {type: 'Augmented', def: [0, 4, 8]},
 
   {type: 'Dominant', def: [0, 4, 7, 10]},
-  {type: 'Major 7th', def: [0, 4, 7, 11]},
-  {type: 'minor 7th', def: [0, 3, 7, 10]},
-  {type: 'half-diminished 7th', def: [0, 3, 6, 10]}
+  {type: 'Major 7', def: [0, 4, 7, 11]},
+  {type: 'minor 7', def: [0, 3, 7, 10]},
+  {type: 'half-diminished 7', def: [0, 3, 6, 10]}
 ];
 
 const ranges ={
@@ -39,16 +39,17 @@ export default class RandomChord extends Playable {
 
     const typesStart = ranges[numberOfNotes][0];
     const typesLength =  ranges[numberOfNotes][1];
-
-    const chord = chordTypes[typesStart + Math.floor(Math.random() * typesLength)];
     const root = bottomNote + Math.floor(Math.random() * chordSpan);
 
-    this.notes = chord.def.map(distanceFromRoot => new Note(root + distanceFromRoot));
+    this.chordType = chordTypes[typesStart + Math.floor(Math.random() * typesLength)];
+    this.notes = this.chordType.def.map(distanceFromRoot => new Note(root + distanceFromRoot));
+  }
 
-    if(numberOfNotes === 2){
-      this.name = `${chord.type} (${this.notes[0].name} - ${this.notes[1].name})`;
+  get name(){
+    if(this.notes.length === 2){
+      return `${this.chordType.type} (${this.notes[0].name} - ${this.notes[1].name})`;
     }else{
-      this.name = this.notes[0].name.slice(0, -1) + ' ' + chord.type; //slice off the number from the note name
+      return this.notes[0].name + ' ' + this.chordType.type;
     }
   }
 }

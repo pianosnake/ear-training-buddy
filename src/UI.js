@@ -84,11 +84,11 @@ export default class UI {
     this.repeatLastQuestion();
     answered = true;
     this.showMsg(currentQuestion.name);
-    this.playBtn.innerHTML = 'Play New';
+    this.playBtn.innerHTML = 'New';
   }
 
   setQuestionType(type){
-    this.playBtn.innerHTML = 'Play New';
+    this.playBtn.innerHTML = 'New';
     answered = true;
     questionType = type;
   }

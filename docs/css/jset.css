@@ -59,6 +59,7 @@ body{
   padding: 10px 0;
   text-decoration: none;
   cursor: pointer;
+  height: 45px;
 }
 
 .center {
@@ -95,4 +96,9 @@ input:checked + label {
 }
 input:checked + label svg {
   margin-left: -1px;
+}
+#hintBtn svg{
+  position: relative;
+  top: 5px;
+  margin-top: -5px;
 }

@@ -21,9 +21,10 @@ export default class Note extends Playable {
 
   get name(){
     if(this._name[1] === 'b'){
-      return this._name.replace('b', '♭');
+      //remove the final digit from the name
+      return this._name.replace('b', '♭').replace(/\d/, '');
     }else{
-      return this._name;
+      return this._name.replace(/\d/, '');
     }
   }
 

@@ -26,17 +26,19 @@ export default class Playable {
     //load the audio for all the notes so they can all play at the same time
     Promise.all(this.notes.map(note => note.getAudio(this.audioContext)))
       .then(() =>{
-        this.notes.forEach((note, index) =>{
-          const source = this.audioContext.createBufferSource();
-          const gainNode = this.audioContext.createGain();  //create a gain node for each note
-          const offset = noteDistance ? index * noteDistance : 0;
+        this.notes
+          .sort((a,b) => a.value - b.value)  //sort in case the chord is voiced or inverted
+          .forEach((note, index) =>{
+            const source = this.audioContext.createBufferSource();
+            const gainNode = this.audioContext.createGain();  //create a gain node for each note
+            const offset = noteDistance ? index * noteDistance : 0;
 
-          source.buffer = note.buffer;
-          source.connect(gainNode);
-          gainNode.connect(this.masterGainNode);
-          gainNode.gain.setTargetAtTime(0, this.audioContext.currentTime + offset, 0.5); //fade out
-          source.start(this.audioContext.currentTime + offset, 0, 3); //end around the same time as the fadeout
-        })
+            source.buffer = note.buffer;
+            source.connect(gainNode);
+            gainNode.connect(this.masterGainNode);
+            gainNode.gain.setTargetAtTime(0, this.audioContext.currentTime + offset, 0.5); //fade out
+            source.start(this.audioContext.currentTime + offset, 0, 3); //end around the same time as the fadeout
+          })
       })
   }
 

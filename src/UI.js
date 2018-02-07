@@ -1,5 +1,5 @@
 import Note from './Note.js';
-import RandomChord from './RandomChord.js';
+import {RandomChord, PivotChord} from './Chord.js';
 import KeyboardShortcut from './KeyboardShortcut.js';
 
 const referenceNote = new Note(69);
@@ -8,8 +8,10 @@ const questionSpan = 15; //one octave=12
 
 let currentQuestion;
 let answered = true;
-let questionType = 1;
+let numberOfNotesToPlay = 1;
 let hintSpeed = 0;
+let pivot = false;
+let voiced = false;
 
 export default class UI {
   constructor(els){
@@ -17,10 +19,14 @@ export default class UI {
     els.hintBtn.addEventListener('click', ()=>this.hint());
     els.referenceBtn.addEventListener('click', ()=>this.playReference());
     els.answerBtn.addEventListener('click', ()=>this.showAnswer());
-    els.note1Radio.addEventListener('click', ()=>this.setQuestionType(1));
-    els.note2Radio.addEventListener('click', ()=>this.setQuestionType(2));
-    els.note3Radio.addEventListener('click', ()=>this.setQuestionType(3));
-    els.note4Radio.addEventListener('click', ()=>this.setQuestionType(4));
+
+    els.note1Radio.addEventListener('click', ()=>this.setNumberOfNotesToPlay(1));
+    els.note2Radio.addEventListener('click', ()=>this.setNumberOfNotesToPlay(2));
+    els.note3Radio.addEventListener('click', ()=>this.setNumberOfNotesToPlay(3));
+    els.note4Radio.addEventListener('click', ()=>this.setNumberOfNotesToPlay(4));
+
+    els.pivotChk.addEventListener('click', ()=>this.setPivot());
+    els.voicedChk.addEventListener('click', ()=>this.setVoiced());
 
     this.playBtn = els.playBtn;
     this.answerDiv = els.answerDiv;
@@ -49,10 +55,14 @@ export default class UI {
     referenceNote.stop();
     hintSpeed = 0;
 
-    if(questionType === 1){
+    if(numberOfNotesToPlay === 1){
       currentQuestion = new Note(bottomNote + Math.floor(Math.random() * questionSpan));
     }else{
-      currentQuestion = new RandomChord(bottomNote, questionSpan, questionType);
+      if(pivot){
+        currentQuestion = new PivotChord(referenceNote, numberOfNotesToPlay, voiced);
+      }else{
+        currentQuestion = new RandomChord(bottomNote, questionSpan, numberOfNotesToPlay, voiced);
+      }
     }
 
     currentQuestion.play();
@@ -73,7 +83,7 @@ export default class UI {
     //slow down the playing each time the hint button is pressed
     this.repeatLastQuestion(hintSpeed * 0.15);
     //reset to original speed
-    if(hintSpeed > 2) hintSpeed = 0;
+    if(hintSpeed > 3) hintSpeed = 0;
   }
 
   showAnswer(){
@@ -82,14 +92,27 @@ export default class UI {
       return;
     }
     this.repeatLastQuestion();
-    answered = true;
     this.showMsg(currentQuestion.name);
-    this.playBtn.innerHTML = 'New';
+    this.reset();
   }
 
-  setQuestionType(type){
+  setNumberOfNotesToPlay(type){
+    numberOfNotesToPlay = type;
+    this.reset();
+  }
+
+  setPivot(){
+    pivot = !pivot;
+    this.reset();
+  }
+
+  setVoiced(){
+    voiced = !voiced;
+    this.reset();
+  }
+
+  reset(){
     this.playBtn.innerHTML = 'New';
     answered = true;
-    questionType = type;
   }
 }

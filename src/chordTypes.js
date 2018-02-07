@@ -25,6 +25,7 @@ export const chordTypes = {
     {type: 'Major 7', def: [0, 4, 7, 11]},
     {type: 'Major 6', def: [0, 4, 7, 9]},
     {type: 'minor 7', def: [0, 3, 7, 10]},
+    {type: 'minor Major 7', def: [0, 3, 7, 11]},
     {type: 'half-diminished 7', def: [0, 3, 6, 10]}
   ]
 };

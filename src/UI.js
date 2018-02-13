@@ -1,4 +1,4 @@
-import Note from './Note.js';
+import {Note, RandomNote, RandomDiatonicNote} from './Note.js';
 import {RandomChord, PivotChord} from './Chord.js';
 import KeyboardShortcut from './KeyboardShortcut.js';
 
@@ -12,6 +12,7 @@ let numberOfNotesToPlay = 1;
 let hintSpeed = 0;
 let pivot = false;
 let voiced = false;
+let diatonic = false;
 
 export default class UI {
   constructor(els){
@@ -27,6 +28,7 @@ export default class UI {
 
     els.pivotChk.addEventListener('click', ()=>this.setPivot());
     els.voicedChk.addEventListener('click', ()=>this.setVoiced());
+    els.diatonicChk.addEventListener('click', ()=>this.setDiatonic());
 
     this.playBtn = els.playBtn;
     this.answerDiv = els.answerDiv;
@@ -56,7 +58,11 @@ export default class UI {
     hintSpeed = 0;
 
     if(numberOfNotesToPlay === 1){
-      currentQuestion = new Note(bottomNote + Math.floor(Math.random() * questionSpan));
+      if(diatonic){
+        currentQuestion = new RandomDiatonicNote(referenceNote);
+      }else{
+        currentQuestion = new RandomNote(bottomNote, questionSpan);
+      }
     }else{
       if(pivot){
         currentQuestion = new PivotChord(referenceNote, numberOfNotesToPlay, voiced);
@@ -108,6 +114,11 @@ export default class UI {
 
   setVoiced(){
     voiced = !voiced;
+    this.reset();
+  }
+
+  setDiatonic(){
+    diatonic = !diatonic;
     this.reset();
   }
 

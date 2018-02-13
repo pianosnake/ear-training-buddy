@@ -3,12 +3,15 @@ import Playable from './Playable.js';
 const noteNames = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 
 function noteNameFromMIDINumber(num){
+  //ie 69 into A4
   const octave = Math.floor(num / 12) - 1;
   const idx = num % 12;
   return noteNames[idx] + octave;
 }
 
-export default class Note extends Playable {
+const diatonicOffsets = [0, 2, 4, 5, 7, 9, 11];
+
+export class Note extends Playable {
   constructor(MIDINumber){
     super();
 
@@ -20,6 +23,7 @@ export default class Note extends Playable {
   }
 
   get name(){
+    //return a pretty name for the note with a real ♭ symbol and no number
     if(this._name[1] === 'b'){
       //remove the final digit from the name
       return this._name.replace('b', '♭').slice(0, -1);
@@ -53,6 +57,21 @@ export default class Note extends Playable {
 
       request.send();
     })
+  }
+}
 
+export class RandomNote extends Note{
+  constructor(bottomNote, questionSpan){
+    const value = bottomNote + Math.floor(Math.random() * questionSpan);
+    super(value);
+  }
+}
+
+
+export class RandomDiatonicNote extends Note{
+  constructor(referenceNote){
+    const octaveOffset = Math.round(Math.random()) * 12
+    const value = referenceNote.value - octaveOffset + diatonicOffsets[Math.floor(Math.random() *  diatonicOffsets.length)];
+    super(value);
   }
 }

@@ -13,5 +13,6 @@ new UI({
   note4Radio: document.getElementById('note4'),
 
   pivotChk: document.getElementById('pivotChk'),
-  voicedChk: document.getElementById('voicedChk')
+  voicedChk: document.getElementById('voicedChk'),
+  diatonicChk: document.getElementById('diatonicChk')
 })

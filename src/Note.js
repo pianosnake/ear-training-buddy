@@ -1,12 +1,14 @@
 import Playable from './Playable.js';
 
+//these note names used to retrive the right files
 const noteNames = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const enharmonicNames = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'];
 
-function noteNameFromMIDINumber(num){
-  //ie 69 into A4
+function fileNameFromMIDINumber(num){
+  //ie 69 into ./sounds/A4-97-127.mp3
   const octave = Math.floor(num / 12) - 1;
   const idx = num % 12;
-  return noteNames[idx] + octave;
+  return './sounds/' + noteNames[idx] + octave + '-97-127.mp3';
 }
 
 const diatonicOffsets = [0, 2, 4, 5, 7, 9, 11];
@@ -16,20 +18,10 @@ export class Note extends Playable {
     super();
 
     this.value = MIDINumber;
-    this._name = noteNameFromMIDINumber(MIDINumber);
-    this.file = './sounds/' + this._name + '-97-127.mp3';
+    this.file = fileNameFromMIDINumber(MIDINumber);
+    this.name = enharmonicNames[this.value % 12];
     this.notes = [this];
     this.buffer;
-  }
-
-  get name(){
-    //return a pretty name for the note with a real ♭ symbol and no number
-    if(this._name[1] === 'b'){
-      //remove the final digit from the name
-      return this._name.replace('b', '♭').slice(0, -1);
-    }else{
-      return this._name.slice(0, -1);
-    }
   }
 
   getAudio(audioContext){

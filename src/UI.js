@@ -1,5 +1,5 @@
 import {Note, RandomNote, RandomDiatonicNote} from './Note.js';
-import {RandomChord, PivotChord} from './Chord.js';
+import {RandomChord, PivotChord, DiatonicInterval, DiatonicChord} from './Chord.js';
 import KeyboardShortcut from './KeyboardShortcut.js';
 
 const referenceNote = new Note(69);
@@ -64,7 +64,13 @@ export default class UI {
         currentQuestion = new RandomNote(bottomNote, questionSpan);
       }
     }else{
-      if(pivot){
+      if(diatonic && numberOfNotesToPlay === 2){
+        currentQuestion = new DiatonicInterval(referenceNote);
+      }
+       else if(diatonic && numberOfNotesToPlay > 2){
+        currentQuestion = new DiatonicChord(referenceNote, numberOfNotesToPlay, voiced);
+      }
+      else if(pivot){
         currentQuestion = new PivotChord(referenceNote, numberOfNotesToPlay, voiced);
       }else{
         currentQuestion = new RandomChord(bottomNote, questionSpan, numberOfNotesToPlay, voiced);

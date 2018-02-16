@@ -1,17 +1,16 @@
 import Playable from './Playable.js';
+import {chordTypes, pickRandom} from './definitions.js';
 
-//these note names used to retrive the right files
+//these note names used to retrieve the right files
 const noteNames = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 const enharmonicNames = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'];
 
 function fileNameFromMIDINumber(num){
-  //ie 69 into ./sounds/A4-97-127.mp3
+  //69 => ./sounds/A4-97-127.mp3
   const octave = Math.floor(num / 12) - 1;
   const idx = num % 12;
   return './sounds/' + noteNames[idx] + octave + '-97-127.mp3';
 }
-
-const diatonicOffsets = [0, 2, 4, 5, 7, 9, 11];
 
 export class Note extends Playable {
   constructor(MIDINumber){
@@ -33,20 +32,16 @@ export class Note extends Playable {
         resolve(this.buffer);
         return;
       }
-
       const request = new XMLHttpRequest();
       request.open('GET', this.file, true);
       request.responseType = 'arraybuffer';
-
       request.onload = () => {
         audioContext.decodeAudioData(request.response, decodedData => {  //Safari 11.0.3 needs this as a callback, not a Promise
           this.buffer = decodedData;
           resolve(this.buffer);
         });
       }
-
       request.onerror = err => reject(err);
-
       request.send();
     })
   }
@@ -59,11 +54,14 @@ export class RandomNote extends Note{
   }
 }
 
-
 export class RandomDiatonicNote extends Note{
   constructor(referenceNote){
-    const octaveOffset = Math.round(Math.random()) * 12
-    const value = referenceNote.value - octaveOffset + diatonicOffsets[Math.floor(Math.random() *  diatonicOffsets.length)];
+    const octaveOffset = Math.round(Math.random()) * 12; //randomly lower by 1 octave
+    const r = pickRandom(chordTypes['diatonic'][1]);
+    const value = referenceNote.value + r.def[0]  - octaveOffset;
+
     super(value);
+
+    this.name = enharmonicNames[this.value % 12] + ' / ' + r.type;
   }
 }

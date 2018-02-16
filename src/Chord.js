@@ -1,19 +1,16 @@
 import Playable from './Playable.js';
 import {Note, RandomDiatonicNote} from './Note.js';
-import {chordTypes} from './chordTypes.js';
+import {chordTypes, pickRandom} from './definitions.js';
 
 const voicings = [-12, 0, 0, -12];  //play the root and 7th an octave below to get a fuller piano sound
 const diatonicOffsets = [0, 2, 4, 5, 7, 9, 11];
 
-function pickRandom(array){
-  return array[Math.floor(Math.random() * array.length)];
-}
-
 class Chord extends Playable{
-  constructor(noteCount){
+  constructor(noteCount, diatonic){
     super();
 
-    this.chord = pickRandom(chordTypes[noteCount]);
+    const type = diatonic || 'chromatic';
+    this.chord = pickRandom(chordTypes[type][noteCount]);
   }
 
   get name(){
@@ -69,32 +66,20 @@ export class DiatonicInterval extends Chord{
     this.notes = [note1, note2];
 
     const diff = Math.abs(note1.value - note2.value);
-    this.chord = chordTypes[2].find(c => c.def[1] === diff);
+    this.chord = chordTypes['chromatic'][2].find(c => c.def[1] === diff);
   }
 }
 
 export class DiatonicChord extends Chord{
   constructor(referenceNote, noteCount, voiced){
-    super(noteCount);
+    super(noteCount, 'diatonic');
 
-    const diatonicLen = diatonicOffsets.length;
-    const start = Math.floor(Math.random() * diatonicLen);
-    const octaveOffset = Math.round(Math.random()) * 12;
+    const octaveOffset = Math.round(Math.random()) * 12; //randomly lower by 1 octave
 
-    //pick every other value from the diatonicOffsets array after the first random value, and wrap around
-    this.notes = Array.apply(null, Array(noteCount)).map((o, index) => {
-      const end = start + (index * 2);
-      const wrapAround = (end >= diatonicLen) ? 12 : 0;
-      const voicedOffset = (voiced && noteCount > 2) ? voicings[index]: 0;
-
-      return new Note(referenceNote.value + diatonicOffsets[end % diatonicLen] + wrapAround - octaveOffset + voicedOffset);
-    })
-
-    const def = this.notes.map((n, index) => {
-      const voicedOffset = (voiced && noteCount > 2) ? voicings[index]: 0;
-      return Math.abs(n.value - referenceNote.value + octaveOffset - voicedOffset) - diatonicOffsets[start];
+    this.notes = this.chord.def
+      .map((distanceFromRoot, index) => {
+        const voicedOffset = (voiced && noteCount > 2) ? voicings[index]: 0;  //don't voice intervals
+        return new Note(referenceNote.value + distanceFromRoot + voicedOffset - octaveOffset);
     });
-
-    this.chord = chordTypes[noteCount].find(c => c.def.toString() === def.toString());
   }
 }

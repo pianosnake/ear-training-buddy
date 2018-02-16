@@ -1,6 +1,6 @@
 # Ear Training Buddy
 
-This is the patient ear training buddy you've always wanted. It's a web app that can play random notes, intervals and chords. [Available live here](https://pianosnake.github.io/ear-training-buddy/index.html).
+This is the patient ear training buddy you've always wanted. It's a web app that can play notes, intervals and chords randomly or diatonically. [Available live here](https://pianosnake.github.io/ear-training-buddy/index.html).
 
 Choose how many notes you'd like to hear played at once by clicking __1__, __2__, __3__ or __4__.
 

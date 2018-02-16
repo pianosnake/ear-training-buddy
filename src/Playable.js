@@ -14,7 +14,7 @@ export default class Playable {
     }
     this.audioContext = window.audioContext;
     this.compressor = this.audioContext.createDynamicsCompressor();
-    this.compressor.attack.value = 0.03;
+    this.compressor.attack.setValueAtTime(0.03, this.audioContext.currentTime);
     this.masterGainNode = this.audioContext.createGain();
     this.masterGainNode.connect(this.compressor);
     this.compressor.connect(this.audioContext.destination);

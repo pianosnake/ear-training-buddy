@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlStringReplace = require('html-string-replace-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const fs = require('fs');
 
 module.exports = {
   entry: './src/index.js',
@@ -23,9 +24,9 @@ module.exports = {
         {
           //replace <script type="module"   with <script
           //so that this will work in Firefox. The bundled js is not a module.
-          match: /script type=\"module\"/g,
+          match: / type=\"module\" src=\"index.js\"\>/g,
           replacement: function(){
-            return 'script';
+            return '>' + fs.readFileSync('docs/index.js', 'utf8');
           }
         }
       ]

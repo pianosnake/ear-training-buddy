@@ -15,15 +15,21 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: false,
       filename: 'index.html',
-      template: './src/index.html',
+      template: 'src/index.html',
       path: path.resolve(__dirname, 'docs')
     }),
     new HtmlStringReplace({
       enable: true,
       patterns: [
         {
-          //replace <script type="module"   with <script
-          //so that this will work in Firefox. The bundled js is not a module.
+          //inline the css
+          match: /<link.*\/>/,
+          replacement: function(){
+            return '<style>' + fs.readFileSync('src/css/jset.css', 'utf8') + '</style>';
+          }
+        },
+        {
+          //inline the script. remove 'type=module' because the bundled js is not a module.
           match: / type=\"module\" src=\"index.js\"\>/g,
           replacement: function(){
             return '>' + fs.readFileSync('docs/index.js', 'utf8');

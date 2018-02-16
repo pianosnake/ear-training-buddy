@@ -3,7 +3,6 @@ import {Note, RandomDiatonicNote} from './Note.js';
 import {chordTypes, pickRandom} from './definitions.js';
 
 const voicings = [-12, 0, 0, -12];  //play the root and 7th an octave below to get a fuller piano sound
-const diatonicOffsets = [0, 2, 4, 5, 7, 9, 11];
 
 class Chord extends Playable{
   constructor(noteCount, diatonic){

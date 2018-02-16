@@ -53,9 +53,7 @@ export default class UI {
       return;
     }
     answered = false;
-
     referenceNote.stop();
-    hintSpeed = 0;
 
     if(numberOfNotesToPlay === 1){
       if(diatonic){
@@ -130,6 +128,7 @@ export default class UI {
 
   reset(){
     this.playBtn.innerHTML = 'New';
+    hintSpeed = 0;
     answered = true;
   }
 }

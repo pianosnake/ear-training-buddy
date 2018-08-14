@@ -5,7 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="css/jset.css" rel="stylesheet" type="text/css"/>
+  <meta http-equiv="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="mobile-web-app-capable" content="yes">
+  <link inline href="css/styles.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -86,7 +88,18 @@
   <div class="source"><a href="https://github.com/pianosnake/ear-training-buddy">https://github.com/pianosnake/ear-training-buddy</a></div>
 </div>
 
-<script type="module" src="index.js"></script>
+<script>
+  const js = document.createElement("script");
+
+  if(window.location.href.indexOf('.github.io') > -1){
+    js.src = "js/bundle.js";
+  }else{
+    js.src = "js/index.js";
+    js.type = "module";
+  }
+
+  document.body.appendChild(js);
+</script>
 
 </body>
 </html>

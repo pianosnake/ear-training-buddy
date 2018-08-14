@@ -1,6 +1,6 @@
 {
   "name": "ear-training-buddy",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,10 +11,8 @@
   "license": "ISC",
   "repository": "https://github.com/pianosnake/ear-training-buddy",
   "devDependencies": {
-    "html-string-replace-webpack-plugin": "^1.0.5",
-    "html-webpack-plugin": "^2.30.1",
-    "uglifyjs-webpack-plugin": "^1.1.8",
-    "webpack": "^3.10.0"
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
   },
   "dependencies": {}
 }

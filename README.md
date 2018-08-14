@@ -26,12 +26,3 @@ The following keyboard shortcuts are provided to speed up the exercise:
 
 The sounds are real piano samples from the [University of Iowa Musical Instrument Samples](http://theremin.music.uiowa.edu/MIS.html) available in the Public Domain.
 
-### Developing
-The `/docs` folder is used for hosting the app on GitHub. The real CSS is here.
-
-The `/src` folder is for the source JavaScript and index.html. Symbolic links to `docs/sounds/` and `docs/css/` allow running a
-server directly from this directory while developing.
-The JS code is written using ES6 modules which Chrome will load correctly based on the `import` and `export` statements.
-
-To build the project do `npm install` to get webpack. Then then do `npm run build` which will create the `docs/index.js` bundle and will
-copy index.html to `docs/` modifying the script tag.

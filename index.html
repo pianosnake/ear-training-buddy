@@ -20,7 +20,7 @@
       <svg viewBox="0 12 7 25">
         <defs>
           <path id="note" fill="#fff" d="m6.31 14.65c0-0.22-0.08-0.41-0.25-0.57-0.17-0.17-0.36-0.25-0.59-0.25-0.39 0-1.18 0.39-2.36 1.17-1.22 0.8-1.97 1.36-2.25 1.7-0.14 0.18-0.21 0.37-0.21 0.57 0 0.22 0.08 0.41 0.25 0.57 0.16 0.17 0.35 0.25 0.59 0.25 0.38 0 1.17-0.39 2.38-1.17 1.2-0.78 1.94-1.35 2.23-1.7 0.14-0.17 0.21-0.36 0.21-0.57m-1.04-1.44c1.12 0 1.68 0.48 1.68 1.45 0 0.47-0.14 1.02-0.41 1.64-0.27 0.61-0.64 1.08-1.09 1.41-1 0.68-2.26 1.01-3.77 1.01-1.12 0-1.68-0.48-1.68-1.44 0-0.43 0.14-0.97 0.41-1.62 0.26-0.62 0.63-1.1 1.09-1.43 1-0.68 2.26-1.01 3.77-1.01"/>
-          <polyline id="stem" points="72.55 137.58 72.55 107.72" transform="translate(-65.934,-107.39237)" style="fill:none;stroke-linecap:round;stroke-linejoin:bevel;stroke-width:0.65;stroke:#fff"/>
+          <polyline id="stem" points="6.616 30.187 6.616 0.3277" style="fill:none;stroke-linecap:round;stroke-linejoin:bevel;stroke-width:0.65;stroke:#fff"/>
           <path id='quarter-note' fill="#fff" d="m 4.3945,0 c 0.625,0 1.1524,0.162 1.582,0.488 0.4037,0.351 0.6055,0.794 0.6055,1.328 0,0.898 -0.4622,1.738 -1.3867,2.52 C 4.2578,5.117 3.2552,5.507 2.1875,5.507 1.5625,5.507 1.0351,5.345 0.6054,5.019 0.2018,4.668 0,4.225 0,3.691 0,2.793 0.4687,1.953 1.4062,1.171 2.3177,0.39 3.3138,0 4.3945,0"/>
         </defs>
         <use xlink:href="#stem" />
@@ -63,11 +63,15 @@
   <div class="btn w-75" id="playBtn">New</div>
   <div class="btn w-25" id="hintBtn">
     <svg width="38" height="38" viewBox="-2 0 27 25" style="fill:#fff;stroke:#fff">
-      <polyline class="Stem" points="89.55 127.41 89.55 113.35" id="polyline38" transform="translate(-65.934,-112.097)" style="stroke-linecap:round;stroke-linejoin:bevel;stroke-width:0.65;"/>
-      <polyline class="Stem" points="72.19 132.41 72.19 118.35" id="polyline40" transform="translate(-65.934,-112.097)" style="stroke-linecap:round;stroke-linejoin:bevel;stroke-width:0.65;"/>
-      <path class="Note" d="m21.75 13.5c0.63 0 1.15 0.16 1.58 0.49 0.4 0.35 0.61 0.79 0.61 1.33 0 0.9-0.46 1.74-1.39 2.52-0.94 0.78-1.94 1.17-3.01 1.17-0.62 0-1.15-0.16-1.58-0.49-0.4-0.35-0.61-0.79-0.61-1.33 0-0.9 0.47-1.74 1.41-2.52 0.91-0.78 1.91-1.17 2.99-1.17" id="path48"/>
-      <path class="Note" d="m4.39 18.5c0.63 0 1.15 0.16 1.58 0.49 0.4 0.35 0.61 0.79 0.61 1.33 0 0.9-0.46 1.74-1.39 2.52-0.94 0.78-1.94 1.17-3.01 1.17-0.62 0-1.15-0.16-1.58-0.49C0.2 23.16 0 22.72 0 22.19 0 21.29 0.47 20.45 1.41 19.67 2.32 18.89 3.31 18.5 4.39 18.5" id="path50"/>
-      <path class="Beam" d="M5.93 5.19 23.94 0V2.5L5.93 7.69v-2.5" id="path66" fill-rule="evenodd"/>
+      <defs>
+        <path id="q-note" d="m21.75 13.5c0.63 0 1.15 0.16 1.58 0.49 0.4 0.35 0.61 0.79 0.61 1.33 0 0.9-0.46 1.74-1.39 2.52-0.94 0.78-1.94 1.17-3.01 1.17-0.62 0-1.15-0.16-1.58-0.49-0.4-0.35-0.61-0.79-0.61-1.33 0-0.9 0.47-1.74 1.41-2.52 0.91-0.78 1.91-1.17 2.99-1.17"/>
+        <polyline id="q-stem" points="23.616 15.313 23.616 1.253" style="stroke-linecap:round;stroke-linejoin:bevel;stroke-width:0.8;"/>
+      </defs>
+      <use xlink:href="#q-stem"/>
+      <use xlink:href="#q-stem" x="-18" y="4"/>
+      <use xlink:href="#q-note"/>
+      <use xlink:href="#q-note" x="-18" y="4"/>
+      <path d="M5.93 5.19 23.94 0V2.5L5.93 7.69v-2.5" />
     </svg>
   </div>
   <div class="btn w-75" id="answerBtn">Answer</div>

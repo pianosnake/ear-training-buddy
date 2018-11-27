@@ -13,7 +13,7 @@ let pivot = false;
 let voiced = false;
 let diatonic = false;
 
-export default class UI {
+export default class App {
   constructor(els){
     els.playBtn.addEventListener('click', ()=>this.playQuestion());
     els.hintBtn.addEventListener('click', ()=>this.hint());

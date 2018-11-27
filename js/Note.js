@@ -16,8 +16,8 @@ export class Note extends Playable {
   constructor(MIDINumber){
     super();
 
-    this.value = MIDINumber;
-    this.file = fileNameFromMIDINumber(MIDINumber);
+    this.value = parseInt(MIDINumber);
+    this.file = fileNameFromMIDINumber(this.value);
     this.name = enharmonicNames[this.value % 12];
     this.notes = [this];
     this.buffer;

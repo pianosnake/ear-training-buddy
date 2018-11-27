@@ -26,3 +26,9 @@ The following keyboard shortcuts are provided to speed up the exercise:
 
 The sounds are real piano samples from the [University of Iowa Musical Instrument Samples](http://theremin.music.uiowa.edu/MIS.html) available in the Public Domain.
 
+## Developing 
+
+In non-production mode the site runs from `index.js` using JS modules provided by `import` and `export` statements. Run locally by starting a webserver in the home directory.
+
+In production mode the site uses `bundle.js`. Run `npm run build` to build the bundle file with webpack.
+

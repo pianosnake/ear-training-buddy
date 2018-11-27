@@ -59,7 +59,25 @@
     </label>
   </div>
 
-  <div class="btn w-25" id="referenceBtn">A</div>
+  <div class="btn w-25" id="referenceBtn">
+    <div id="refNoteLabel">A</div>
+    <svg width="18" height="18" viewBox="0 0 18 18" style="fill:#fff;stroke:#fff"><path d="M5 8l4 4 4-4z"/></svg>
+    <select id="refNoteSelect">
+      <option value="60">C</option>
+      <option value="61">C♯</option>
+      <option value="62">D</option>
+      <option value="63">D♯</option>
+      <option value="64">E</option>
+      <option value="65">F</option>
+      <option value="66">F♯</option>
+      <option value="67">G</option>
+      <option value="68">G♯</option>
+      <option value="69" selected>A</option>
+      <option value="70">A♯</option>
+      <option value="71">B</option>
+    </select>
+  </div>
+
   <div class="btn w-75" id="playBtn">New</div>
   <div class="btn w-25" id="hintBtn">
     <svg width="38" height="38" viewBox="-2 0 27 25" style="fill:#fff;stroke:#fff">
@@ -95,7 +113,7 @@
 <script>
   const js = document.createElement("script");
 
-  if(window.location.href.indexOf('.github.io') > -1){
+  if(window.location.href.includes('.github.io')){
     js.src = "js/bundle.js";
   }else{
     js.src = "js/index.js";

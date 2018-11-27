@@ -2,7 +2,6 @@ import {Note, RandomNote, RandomDiatonicNote} from './Note.js';
 import {RandomChord, PivotChord, DiatonicInterval, DiatonicChord} from './Chord.js';
 import KeyboardShortcut from './KeyboardShortcut.js';
 
-const referenceNote = new Note(69);
 const bottomNote = 57; //C4=60
 const questionSpan = 15; //one octave=12
 
@@ -19,6 +18,7 @@ export default class UI {
     els.playBtn.addEventListener('click', ()=>this.playQuestion());
     els.hintBtn.addEventListener('click', ()=>this.hint());
     els.referenceBtn.addEventListener('click', ()=>this.playReference());
+    els.refNoteSelect.addEventListener('change', ()=>this.changeReference());
     els.answerBtn.addEventListener('click', ()=>this.showAnswer());
 
     els.note1Radio.addEventListener('click', ()=>this.setNumberOfNotesToPlay(1));
@@ -32,6 +32,9 @@ export default class UI {
 
     this.playBtn = els.playBtn;
     this.answerDiv = els.answerDiv;
+    this.refNoteSelect = els.refNoteSelect;
+    this.refNoteLabel = els.refNoteLabel;
+    this.referenceNote = new Note(this.refNoteSelect.value);
 
     new KeyboardShortcut('r', ()=>this.playQuestion());
     new KeyboardShortcut('a', ()=>this.playReference());
@@ -44,7 +47,12 @@ export default class UI {
   }
 
   playReference(){
-    referenceNote.play();
+    this.referenceNote.play();
+  }
+
+  changeReference(){
+    this.referenceNote = new Note(this.refNoteSelect.value);
+    this.refNoteLabel.innerText = this.referenceNote.name;
   }
 
   playQuestion(){
@@ -53,23 +61,23 @@ export default class UI {
       return;
     }
     answered = false;
-    referenceNote.stop();
+    this.referenceNote.stop();
 
     if(numberOfNotesToPlay === 1){
       if(diatonic){
-        currentQuestion = new RandomDiatonicNote(referenceNote);
+        currentQuestion = new RandomDiatonicNote(this.referenceNote);
       }else{
         currentQuestion = new RandomNote(bottomNote, questionSpan);
       }
     }else{
       if(diatonic){
         if(numberOfNotesToPlay === 2){
-          currentQuestion = new DiatonicInterval(referenceNote);
+          currentQuestion = new DiatonicInterval(this.referenceNote);
         }else if(numberOfNotesToPlay > 2){
-          currentQuestion = new DiatonicChord(referenceNote, numberOfNotesToPlay, voiced);
+          currentQuestion = new DiatonicChord(this.referenceNote, numberOfNotesToPlay, voiced);
         }
       }else if(pivot){
-        currentQuestion = new PivotChord(referenceNote, numberOfNotesToPlay, voiced);
+        currentQuestion = new PivotChord(this.referenceNote, numberOfNotesToPlay, voiced);
       }else{
         currentQuestion = new RandomChord(bottomNote, questionSpan, numberOfNotesToPlay, voiced);
       }

@@ -9,7 +9,7 @@ function fileNameFromMIDINumber(num) {
   //69 => ./sounds/A4-97-127.mp3
   const octave = Math.floor(num / 12) - 1;
   const idx = num % 12;
-  return '../sounds/' + noteNames[idx] + octave + '-97-127.mp3';
+  return './sounds/' + noteNames[idx] + octave + '-97-127.mp3';
 }
 
 export class Note extends Playable {
@@ -36,7 +36,10 @@ export class Note extends Playable {
       const request = new XMLHttpRequest();
       request.open('GET', this.file, true);
       request.responseType = 'arraybuffer';
-      request.onload = () => {
+      request.onloadend = () => {
+        if(request.status === 404){
+          return reject('Audio file not found');
+        }
         audioContext.decodeAudioData(request.response, decodedData => {  //Safari 11.0.3 needs this as a callback, not a Promise
           this.buffer = decodedData;
           resolve(this.buffer);

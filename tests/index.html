@@ -4,14 +4,17 @@
   <meta charset="utf-8">
   <title>Jasmine Spec Runner v3.3.0</title>
 
-  <link rel="stylesheet" href="../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+  <!-- set the base one dir up so that we dont have to modify the path of the sound files -->
+  <base href="../">
 
-  <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
-  <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
-  <script src="../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+  <link rel="stylesheet" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+
+  <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+  <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+  <script src="node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
 
   <!-- include spec files here... -->
-  <script type="module" src="Note-spec.js"></script>
+  <script type="module" src="tests/Note-spec.js"></script>
 
 </head>
 

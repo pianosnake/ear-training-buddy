@@ -7,7 +7,7 @@ describe('Note', () => {
 
     expect(note.value).toEqual(60);
     expect(note.name).toEqual('C');
-    expect(note.file).toEqual('/sounds/C4-97-127.mp3');
+    expect(note.file).toEqual('../sounds/C4-97-127.mp3');
   });
 
   it('should create a C sharp', () => {
@@ -15,7 +15,7 @@ describe('Note', () => {
 
     expect(note.value).toEqual(61);
     expect(note.name).toEqual('C♯');
-    expect(note.file).toEqual('/sounds/Db4-97-127.mp3');
+    expect(note.file).toEqual('../sounds/Db4-97-127.mp3');
   });
 
   it('should be playable and have note data', async () => {
@@ -23,11 +23,11 @@ describe('Note', () => {
 
     expect(note.value).toEqual(62);
     expect(note.name).toEqual('D');
-    expect(note.file).toEqual('/sounds/D4-97-127.mp3');
+    expect(note.file).toEqual('../sounds/D4-97-127.mp3');
     expect(note.buffer).toBeNull();
 
     await note.play();
-    expect(note.buffer).toBeDefined();
+    expect(note.buffer).not.toBeNull();
   });
 });
 

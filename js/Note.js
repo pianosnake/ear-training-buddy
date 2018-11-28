@@ -9,7 +9,7 @@ function fileNameFromMIDINumber(num) {
   //69 => ./sounds/A4-97-127.mp3
   const octave = Math.floor(num / 12) - 1;
   const idx = num % 12;
-  return '/sounds/' + noteNames[idx] + octave + '-97-127.mp3';
+  return '../sounds/' + noteNames[idx] + octave + '-97-127.mp3';
 }
 
 export class Note extends Playable {

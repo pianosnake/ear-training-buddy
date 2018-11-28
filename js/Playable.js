@@ -34,7 +34,7 @@ export default class Playable {
     masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
 
     //load the audio for all the notes so they can all play at the same time
-    Promise.all(this.notes.map(note => note.getAudio(audioContext)))
+    return Promise.all(this.notes.map(note => note.getAudio(audioContext)))
       .then(() => {
         this.notes
           .sort((a, b) => a.value - b.value)  //sort in case the chord is voiced or inverted

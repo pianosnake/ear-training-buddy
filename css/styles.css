@@ -109,6 +109,9 @@ h1{
   right:  2px;
   top: 12px;
 }
+#refNoteSelect{
+  cursor: pointer;
+}
 #referenceBtn{
   position: relative;
 }

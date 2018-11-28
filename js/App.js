@@ -1,8 +1,9 @@
-import {Note, RandomNote, RandomDiatonicNote} from './Note.js';
-import {RandomChord, PivotChord, DiatonicInterval, DiatonicChord} from './Chord.js';
+import {Note, randomNote, randomDiatonicNote} from './Note.js';
+import {randomChord, randomPivotChord, randomDiatonicChord} from './Chord.js';
+import {randomDiatonicInterval} from './DiatonicInterval.js';
 import KeyboardShortcut from './KeyboardShortcut.js';
 
-const bottomNote = 57; //C4=60
+const bottomNoteValue = 57; //C4=60
 const questionSpan = 15; //one octave=12
 
 let currentQuestion;
@@ -30,6 +31,8 @@ export default class App {
     els.voicedChk.addEventListener('click', ()=>this.setVoiced());
     els.diatonicChk.addEventListener('click', ()=>this.setDiatonic());
 
+    this.diatonicChk = els.diatonicChk;
+    this.pivotChk = els.pivotChk;
     this.playBtn = els.playBtn;
     this.answerDiv = els.answerDiv;
     this.refNoteSelect = els.refNoteSelect;
@@ -65,21 +68,21 @@ export default class App {
 
     if(numberOfNotesToPlay === 1){
       if(diatonic){
-        currentQuestion = new RandomDiatonicNote(this.referenceNote);
+        currentQuestion = randomDiatonicNote(this.referenceNote.value);
       }else{
-        currentQuestion = new RandomNote(bottomNote, questionSpan);
+        currentQuestion = randomNote(bottomNoteValue, questionSpan);
       }
     }else{
       if(diatonic){
         if(numberOfNotesToPlay === 2){
-          currentQuestion = new DiatonicInterval(this.referenceNote);
+          currentQuestion = randomDiatonicInterval(this.referenceNote.value);
         }else if(numberOfNotesToPlay > 2){
-          currentQuestion = new DiatonicChord(this.referenceNote, numberOfNotesToPlay, voiced);
+          currentQuestion = randomDiatonicChord(this.referenceNote.value, numberOfNotesToPlay, voiced);
         }
       }else if(pivot){
-        currentQuestion = new PivotChord(this.referenceNote, numberOfNotesToPlay, voiced);
+        currentQuestion = randomPivotChord(this.referenceNote.value, numberOfNotesToPlay, voiced);
       }else{
-        currentQuestion = new RandomChord(bottomNote, questionSpan, numberOfNotesToPlay, voiced);
+        currentQuestion = randomChord(bottomNoteValue, questionSpan, numberOfNotesToPlay, voiced);
       }
     }
 
@@ -121,6 +124,8 @@ export default class App {
 
   setPivot(){
     pivot = !pivot;
+    diatonic = false;
+    this.diatonicChk.checked = false;
     this.reset();
   }
 
@@ -131,6 +136,8 @@ export default class App {
 
   setDiatonic(){
     diatonic = !diatonic;
+    pivot = false;
+    this.pivotChk.checked = false;
     this.reset();
   }
 

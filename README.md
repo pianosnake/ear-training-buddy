@@ -32,3 +32,4 @@ In non-production mode the site runs from `index.js` using JS modules provided b
 
 In production mode the site uses `bundle.js`. Run `npm run build` to build the bundle file with webpack.
 
+Tests are written in Jasmine and run in the browser at `/tests`. 

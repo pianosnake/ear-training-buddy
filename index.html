@@ -14,7 +14,7 @@
 <div class="container">
   <h1>Ear Training Buddy</h1>
 
-  <div class="center pb-15 note-options">
+  <div class="center note-options">
     <input type="radio" id="note1Radio" name="questionType" checked>
     <label for="note1Radio">
       <svg viewBox="0 12 7 25">
@@ -59,7 +59,10 @@
     </label>
   </div>
 
+
+
   <div class="btn w-25" id="referenceBtn">
+    <div class="description">Reference note [A]</div>
     <div id="refNoteLabel" class="unselectable">A</div>
     <svg width="18" height="18" viewBox="0 0 18 18" style="fill:#fff;stroke:#fff"><path d="M5 8l4 4 4-4z"/></svg>
     <select id="refNoteSelect">
@@ -78,8 +81,13 @@
     </select>
   </div>
 
-  <div class="btn w-75 unselectable" id="playBtn">New</div>
+  <div class="btn w-75 unselectable" id="playBtn">
+    <div class="description">[R]</div>
+    <span id="playBtnLabel">New Question</span>
+  </div>
+  
   <div class="btn w-25 unselectable" id="hintBtn">
+    <div class="description">Hint [H]</div>
     <svg width="38" height="38" viewBox="-2 0 27 25" style="fill:#fff;stroke:#fff">
       <defs>
         <path id="q-note" d="m21.75 13.5c0.63 0 1.15 0.16 1.58 0.49 0.4 0.35 0.61 0.79 0.61 1.33 0 0.9-0.46 1.74-1.39 2.52-0.94 0.78-1.94 1.17-3.01 1.17-0.62 0-1.15-0.16-1.58-0.49-0.4-0.35-0.61-0.79-0.61-1.33 0-0.9 0.47-1.74 1.41-2.52 0.91-0.78 1.91-1.17 2.99-1.17"/>
@@ -92,7 +100,9 @@
       <path d="M5.93 5.19 23.94 0V2.5L5.93 7.69v-2.5" />
     </svg>
   </div>
-  <div class="btn w-75 unselectable" id="answerBtn">Answer</div>
+  <div class="btn w-75 unselectable" id="answerBtn">
+      <div class="description">[SPACE]</div>
+    Answer</div>
 
   <div id="answerDiv" class="center"></div>
 

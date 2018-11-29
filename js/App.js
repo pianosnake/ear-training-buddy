@@ -34,7 +34,7 @@ export default class App {
 
     this.diatonicChk = els.diatonicChk;
     this.pivotChk = els.pivotChk;
-    this.playBtn = els.playBtn;
+    this.playBtnLabel = els.playBtnLabel;
     this.answerDiv = els.answerDiv;
     this.refNoteSelect = els.refNoteSelect;
     this.refNoteLabel = els.refNoteLabel;
@@ -89,7 +89,7 @@ export default class App {
 
     currentQuestion.play();
     this.showMsg('');
-    this.playBtn.innerHTML = 'Repeat';
+    this.playBtnLabel.innerHTML = 'Repeat';
   }
 
   repeatLastQuestion(noteDistance) {
@@ -143,7 +143,7 @@ export default class App {
   }
 
   reset() {
-    this.playBtn.innerHTML = 'New';
+    this.playBtnLabel.innerHTML = 'New Question';
     hintSpeed = 0;
     answered = true;
   }

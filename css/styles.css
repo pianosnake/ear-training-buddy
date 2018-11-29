@@ -36,14 +36,12 @@ h1{
 .w-25{
   width: 25%;
 }
-.pb-15{
-  padding-bottom: 15px;
-}
 .btn {
+  position: relative;
   user-select: none;
   display: inline-block;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   margin-right: -3px;
   background: #94c3e2;
   background-image: -webkit-linear-gradient(top, #94c3e2, #2980b9);
@@ -62,7 +60,14 @@ h1{
   cursor: pointer;
   height: 45px;
 }
-
+.description{
+  position: absolute;
+  width: 200%;
+  top: -20px;
+  margin-left: -50%;
+  color: #5a8fb3;
+  font-size: 0.7em;
+}
 .center {
   display: block;
   text-align: center;
@@ -72,6 +77,9 @@ h1{
   display: block;
 }
 
+.note-options{
+  padding-bottom: 25px;
+}
 /* Restyle the default radio buttons */
 .note-options input[type='radio']{
   position: absolute;
@@ -111,9 +119,6 @@ h1{
 }
 #refNoteSelect{
   cursor: pointer;
-}
-#referenceBtn{
-  position: relative;
 }
 #referenceBtn select{
   position: absolute;
